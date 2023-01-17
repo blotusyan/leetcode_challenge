@@ -55,3 +55,18 @@ where
     DATEDIFF(b.recordDate,a.recordDate)=1 
 and b.Temperature > a.Temperature;
 
+-- game analysis
+SELECT
+    player_id,
+    min(event_date) AS first_login
+FROM
+    Activity
+GROUP BY
+    player_id
+;
+
+-- find customer referee
+select name
+from Customer
+where referee_id != 2 OR referee_id is null
+;
