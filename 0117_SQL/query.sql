@@ -30,4 +30,28 @@ from Person
 group by Email
 having count(Email)>1;
 
+-- customers who never order
+select customers.name as 'Customers'
+from customers
+where customers.id not in
+(
+    select customerid from orders
+);
+
+-- delete duplicate email
+DELETE p1 FROM Person p1,
+    Person p2
+WHERE
+    p1.Email = p2.Email AND p1.Id > p2.Id
+
+-- rising tem
+select 
+    b.Id 
+from 
+    weather a 
+inner join 
+    weather b 
+where 
+    DATEDIFF(b.recordDate,a.recordDate)=1 
+and b.Temperature > a.Temperature;
 
