@@ -70,3 +70,13 @@ select name
 from Customer
 where referee_id != 2 OR referee_id is null
 ;
+
+-- customer with most order
+SELECT
+    customer_number
+FROM
+    orders
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC
+LIMIT 1
+;
