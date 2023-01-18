@@ -1,3 +1,12 @@
+-- DDL
+Create table If Not Exists cinema (id int, movie varchar(255), description varchar(255), rating float(2, 1))
+Truncate table cinema
+insert into cinema (id, movie, description, rating) values ('1', 'War', 'great 3D', '8.9')
+insert into cinema (id, movie, description, rating) values ('2', 'Science', 'fiction', '8.5')
+insert into cinema (id, movie, description, rating) values ('3', 'irish', 'boring', '6.2')
+insert into cinema (id, movie, description, rating) values ('4', 'Ice song', 'Fantacy', '8.6')
+insert into cinema (id, movie, description, rating) values ('5', 'House card', 'Interesting', '9.1')
+
 -- join two table 175
 select FirstName, LastName, City, State
 from Person left join Address
@@ -80,3 +89,27 @@ GROUP BY customer_number
 ORDER BY COUNT(*) DESC
 LIMIT 1
 ;
+
+-- sales person no order with red
+SELECT
+    s.name
+FROM
+    salesperson s
+WHERE
+    s.sales_id NOT IN (SELECT
+            o.sales_id
+        FROM
+            orders o
+                LEFT JOIN
+            company c ON o.com_id = c.com_id
+        WHERE
+            c.name = 'RED')
+;
+
+-- swap sex
+UPDATE salary
+SET
+    sex = CASE sex
+        WHEN 'm' THEN 'f'
+        ELSE 'm'
+    END;
