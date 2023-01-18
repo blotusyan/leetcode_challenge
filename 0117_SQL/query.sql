@@ -113,3 +113,24 @@ SET
         WHEN 'm' THEN 'f'
         ELSE 'm'
     END;
+
+-- second high
+SELECT
+    (SELECT DISTINCT
+            Salary
+        FROM
+            Employee
+        ORDER BY Salary DESC
+        LIMIT 1 OFFSET 1) AS SecondHighestSalary
+;
+
+-- rank score
+select a.Score as Score,
+(
+    select count(distinct b.Score) 
+    from Scores b 
+    where b.Score >= a.Score
+) as 'rank'
+from Scores a
+order by a.Score DESC
+;
