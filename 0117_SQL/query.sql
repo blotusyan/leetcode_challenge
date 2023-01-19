@@ -134,3 +134,75 @@ select a.Score as Score,
 from Scores a
 order by a.Score DESC
 ;
+
+-- consecutive numbers
+SELECT DISTINCT
+    l1.Num AS ConsecutiveNums
+FROM
+    Logs l1,
+    Logs l2,
+    Logs l3
+WHERE
+    l1.Id = l2.Id - 1
+    AND l2.Id = l3.Id - 1
+    AND l1.Num = l2.Num
+    AND l2.Num = l3.Num
+;
+
+-- department highest salary
+SELECT
+    Department.name AS 'Department',
+    Employee.name AS 'Employee',
+    Salary
+FROM
+    Employee
+        JOIN
+    Department ON Employee.DepartmentId = Department.Id
+WHERE
+    (Employee.DepartmentId , Salary) IN
+    (   SELECT
+            DepartmentId, MAX(Salary)
+        FROM
+            Employee
+        GROUP BY DepartmentId
+	)
+;
+
+-- tree node
+SELECT
+    id, 'Root' AS Type
+FROM
+    tree
+WHERE
+    p_id IS NULL
+
+UNION
+
+SELECT
+    id, 'Leaf' AS Type
+FROM
+    tree
+WHERE
+    id NOT IN (SELECT DISTINCT
+            p_id
+        FROM
+            tree
+        WHERE
+            p_id IS NOT NULL)
+        AND p_id IS NOT NULL
+
+UNION
+
+SELECT
+    id, 'Inner' AS Type
+FROM
+    tree
+WHERE
+    id IN (SELECT DISTINCT
+            p_id
+        FROM
+            tree
+        WHERE
+            p_id IS NOT NULL)
+        AND p_id IS NOT NULL
+ORDER BY id;
